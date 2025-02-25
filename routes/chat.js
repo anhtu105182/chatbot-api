@@ -88,7 +88,7 @@ router.delete('/messages/:message_id', async (req, res) => {
 
 // API ChatGPT
 // Gửi tin nhắn & lưu vào CSDL
-router.post('/chat', chatWithGemini);
+router.post('/chatgemini', chatWithGemini);
 
 // Lấy lịch sử tin nhắn theo chat_id
     // router.get('/messages/:chat_id', async (req, res) => {
