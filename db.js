@@ -1,14 +1,17 @@
-const mysql = require('mysql2');
 
-// Tạo pool kết nối
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',       // Thay bằng username của bạn
-    password: '1234',       // Thay bằng password của bạn
-    database: 'chatbot_db',
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '1234',
+    database: process.env.DB_NAME || 'chatbot_db',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
 });
 
-module.exports = pool.promise(); // Sử dụng promise để hỗ trợ async/await
+module.exports = pool;
+
+

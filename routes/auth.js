@@ -1,7 +1,9 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
+require('dotenv').config(); // Load biến môi trường từ .env
+
 
 const router = express.Router();
 
@@ -35,7 +37,7 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // Kiểm tra người dùng
+        // Kiểm tra username
         const [user] = await db.query('SELECT * FROM Users WHERE username = ?', [username]);
         if (user.length === 0) return res.status(400).json({ message: 'User not found' });
 
@@ -43,11 +45,22 @@ router.post('/login', async (req, res) => {
         const validPassword = await bcrypt.compare(password, user[0].password);
         if (!validPassword) return res.status(400).json({ message: 'Invalid password' });
 
-        // Tạo token JWT
-        const token = jwt.sign({ user_id: user[0].user_id }, 'your_secret_key', { expiresIn: '1h' });
+        // 🔹 Kiểm tra nếu JWT_SECRET chưa được cấu hình
+        if (!process.env.JWT_SECRET) {
+            return res.status(500).json({ error: "JWT_SECRET chưa được cấu hình trong .env" });
+        }
+
+        // ✅ Tạo token bảo mật từ JWT_SECRET
+        const token = jwt.sign(
+            { user_id: user[0].user_id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
         res.json({ token });
-        
+
     } catch (error) {
+        console.error("Lỗi đăng nhập:", error);
         res.status(500).json({ message: 'Server error', error });
     }
 });
