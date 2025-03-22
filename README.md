@@ -80,11 +80,14 @@ chatbot-api/
 | `POST`     | `/api/chat/chatgemini`         | Gửi tin nhắn đến chatbot         |
 | `DELETE`   | `/api/chat/messages/:chat_id`  | Xóa tin nhắn                     |
 
+**Đối với api xóa tin nhắn** thì chỉ có tk có vai trò admin và tk của mình mới xóa được tin nhắn của mình
+
 📌 **Lưu ý:** API yêu cầu **Bearer Token**, dùng `Authorization: Bearer <TOKEN>` trong header.
 
 ---
 
-## 📌 6. Test API bằng Postman
+## 📌 6. Test API bằng Postman 
+**Lưu ý** những api ở phần quản lí tin nhắn thì mới cần gửi token -- api login và register thì không 
 - Mở **Postman** và nhập URL **`http://localhost:5000/api/...`**.
 - Gửi request với header:
   ```json

@@ -62,48 +62,6 @@ exports.chatWithGemini = async (req, res) => {
 };
 
 
-// lấy tin nhắn 
-// exports.getChatMessages = async (req, res) => {
-//     try {
-//         const user_id = req.user_id; // 🆕 Lấy user_id từ token
-//         const { chat_id } = req.params;
-
-//         console.log("🔍 Debug: user_id nhận được:", user_id);
-//         console.log("🔍 Debug: chat_id nhận được:", chat_id);
-
-//         // 🔹 Kiểm tra `chat_id` có thuộc về user không
-//         const [chatExists] = await db.query(
-//             "SELECT * FROM Chats WHERE chat_id = ? AND user_id = ?",
-//             [chat_id, user_id]
-//         );
-
-//         if (chatExists.length === 0) {
-//             return res.status(400).json({ error: "Cuộc trò chuyện không tồn tại hoặc bạn không có quyền truy cập" });
-//         }
-
-//         // 🔹 Lấy tin nhắn nếu `chat_id` hợp lệ
-//         const [messages] = await db.query(
-//             `SELECT 
-//                 m.sender_id, 
-//                 u.username AS sender_name, 
-//                 m.content, 
-//                 m.created_at 
-//             FROM Messages m
-//             JOIN Users u ON m.sender_id = u.user_id
-//             WHERE chat_id = ? 
-//             ORDER BY m.created_at ASC`,
-//             [chat_id]
-//         );
-
-//         res.json({ chat_id, messages });
-
-//     } catch (error) {
-//         console.error("❌ Lỗi khi lấy lịch sử tin nhắn:", error);
-//         res.status(500).json({ error: "Lỗi server", details: error.message });
-//     }
-// };
-
-
 exports.getChatMessages = async (req, res) => {
     try {
         const user_id = req.user_id; // 🆕 Lấy user_id từ token

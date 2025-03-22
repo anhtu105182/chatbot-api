@@ -37,3 +37,17 @@ CREATE TABLE Messages (
     FOREIGN KEY (chat_id) REFERENCES Chats(chat_id),
     FOREIGN KEY (sender_id) REFERENCES Users(user_id)
 );
+
+-- 🔹 Tạo user chatbot (Admin)
+INSERT INTO Users (user_id, username, password, role)  
+VALUES (1, 'chatbot', '$2b$10$xxxxxxxxxxxxxxxxxxxx', 'admin') 
+ON DUPLICATE KEY UPDATE username = 'chatbot';
+
+-- 🔹 Tạo tài khoản mẫu cho Student
+INSERT INTO Users (username, password, role) 
+VALUES ('student1', '$2b$10$yyyyyyyyyyyyyyyyyyyy', 'student')
+
+-- 🔹 Thêm phòng ban (Departments)
+INSERT INTO Departments (dept_id, dept_name) 
+VALUES (1, 'Phòng Tuyển Sinh')
+ON DUPLICATE KEY UPDATE dept_name = VALUES(dept_name);
