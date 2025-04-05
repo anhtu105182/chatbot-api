@@ -56,8 +56,13 @@ router.post('/login', async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         );
+        // Trả về thông tin người dùng và vai trò
+        const userInfo = {
+            message: 'Login successful',
+            role: user[0].role
+        };
+        res.json({ token, ...userInfo });
 
-        res.json({ token });
 
     } catch (error) {
         console.error("Lỗi đăng nhập:", error);

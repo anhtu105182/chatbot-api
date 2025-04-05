@@ -1,3 +1,4 @@
+CREATE DATABASE IF NOT EXISTS chatbot_db;
 USE chatbot_db;
 
 -- Bảng Users
